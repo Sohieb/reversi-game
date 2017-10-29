@@ -4,29 +4,28 @@ import sys
 SIDE_LEN = 8
 grid = [[0 for x in range(SIDE_LEN)] for y in range(SIDE_LEN)]
 
-""" The player will use the white cells
-and the AI will use the black ones """
+""" The player will use the white cells (turn 1)
+and the AI will use the black ones (turn 0) """
 def main():
   init()
-  curTurn = 1
-  failedMove = 0
+  curTurn = 1           # the player moves first
+  failedMove = 0        # count the number of turns which the current player has no vaild move
   draw()
   while failedMove < 2:
     validMoves = getAvailableMoves(curTurn)
     if len(validMoves) == 0:
       failedMove +=1
-      curTurn = 1 - curTurn
+      curTurn = 1 - curTurn               # switch to the next player (1->0, 0->1)
       continue
     failedMove = 0
-    if curTurn == 0:
-      #AI turn
+    if curTurn == 0:                      # AI turn
       nextMove = getAIMove(validMoves)
-    else:
+    else:                                 # player turn
       nextMove = getPlayerMove(validMoves)
     playAndUpdate(nextMove, curTurn)
     draw()
     if curTurn == 1:
-      dummy = input("Well done!!\nPress enter to give the AI his next move.")
+      dummy = raw_input("Well done!!\nPress enter to give the AI his next move.")
     curTurn = 1 - curTurn
   finalScore = calculateScore()
   print("Your score is: %d and the AI score is: %d" %(finalScore[0], finalScore[1]))
@@ -48,9 +47,7 @@ def init():
   grid[4][3] = 1
   grid[4][4] = 0
 
-"""
-updated to run on python2
-"""
+""" updated to run on python2 """
 def draw():
   for j in range(SIDE_LEN):
     sys.stdout.write('---')
@@ -106,13 +103,16 @@ def getAvailableMoves(turn):
           break
   return validMoves
 
-"""****************************************************************************************"""
-"""This functoin needs to be updated to handel if return pressed without entering any value"""
-"""****************************************************************************************"""
 def getPlayerMove(AvailableMoves):
-  nextMove = int(input("Please choose your next move.")) 
-  while nextMove not in AvailableMoves:
-    nextMove = int(input("Wrong move!!!\nPlease choeese your next valid move."))
+  while True:
+    nextMove = raw_input("Please choose your next move.")    
+    try:
+      nextMove = int(nextMove)
+      if nextMove in AvailableMoves:
+        break
+    except ValueError:
+      pass
+    print("Wrong cell number")
   return nextMove
 
 def playAndUpdate(cellValue, turn):
