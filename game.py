@@ -1,4 +1,5 @@
 import random
+import sys
 
 SIDE_LEN = 8
 grid = [[0 for x in range(SIDE_LEN)] for y in range(SIDE_LEN)]
@@ -47,22 +48,33 @@ def init():
   grid[4][3] = 1
   grid[4][4] = 0
 
+"""
+updated to run on python2
+"""
 def draw():
   for j in range(SIDE_LEN):
-      print("---", end = '')
+    sys.stdout.write('---')
+    #print("---", end = '')
   print('-')
   for i in range(SIDE_LEN):
-    print("|", end = '')
+    sys.stdout.write('|')
+    #print("|", end = '')
     for j in range(SIDE_LEN):
       if grid[i][j] == -1:
-        print("%2d" % (i*8+j), end = '')
+        sys.stdout.write("%2d" % (i*8+j))
+        #print("%2d" % (i*8+j), end = '')
       elif grid[i][j] == 0:
-        print("%2s" % "*", end = '')
-      else: print("%2s" % "@", end = '')
-      print("|", end = '')
+        sys.stdout.write("%2s" % "*")
+        #print("%2s" % "*", end = '')
+      else:
+        sys.stdout.write("%2s" % "@")
+        #print("%2s" % "@", end = '')
+      sys.stdout.write('|')
+      #print("|", end = '')
     print('')
     for j in range(SIDE_LEN):
-      print("---", end = '')
+      sys.stdout.write('---')
+      #print("---", end = '')
     print('-')
 
 DIRECTION_COUNT = 8
@@ -94,6 +106,9 @@ def getAvailableMoves(turn):
           break
   return validMoves
 
+"""****************************************************************************************"""
+"""This functoin needs to be updated to handel if return pressed without entering any value"""
+"""****************************************************************************************"""
 def getPlayerMove(AvailableMoves):
   nextMove = int(input("Please choose your next move.")) 
   while nextMove not in AvailableMoves:
