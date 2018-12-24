@@ -1,5 +1,3 @@
-
-
 ## common parameters used in the game
 BLACK_CELL = 0
 WHITE_CELL = 1
