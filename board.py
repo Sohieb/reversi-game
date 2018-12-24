@@ -29,6 +29,20 @@ class game_model:
 
 		self.valid_moves = []
 
+	def reset_game_board(self):
+		
+		## create the game grid & initialize it with empty cells
+		self.grid = [[0 for x in range(self.SIDE_LEN)] for y in range(self.SIDE_LEN)]
+		for i in range(self.SIDE_LEN):
+			for j in range(self.SIDE_LEN):
+				self.grid[i][j] = self.EMPTY_CELL
+
+		## set the initial 4 center cells
+		self.grid[3][3] = self.WHITE_CELL
+		self.grid[4][4] = self.WHITE_CELL
+		self.grid[3][4] = self.BLACK_CELL
+		self.grid[4][3] = self.BLACK_CELL
+
 	
 	def set_cell(self, pos, color):
 		self.grid[pos[0]][pos[1]] = color
