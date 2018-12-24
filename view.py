@@ -76,6 +76,45 @@ class game_interface:
 			pygame.display.update()
 
 
+	def result_screen(self, winner):
+		""" 
+		Show the result screen and return either 
+		continue or it exits the game
+		"""
+
+		while True:
+			self.game_display.fill(self.BACKGROUND_COLOR)
+
+			game_title_font = pygame.font.SysFont('comicsansms', 100)
+			if winner != "TIE":
+				game_title = game_title_font.render(winner + " Wins", True, self.WHITE_COLOR)
+			else:
+				game_title = game_title_font.render("TIE", True, self.WHITE_COLOR)
+			game_title_pos = game_title.get_rect()
+			game_title_pos.center = (self.SCREEN_SIZE[0] // 2, self.SCREEN_SIZE[1] // 2 - 50)
+
+			self.game_display.blit(game_title, game_title_pos)
+
+			mode1_clicked = self.add_button("Continue", 200, 350, 100, 50, \
+				self.BUTTON_INACTIVE_COLOR, self.BUTTON_ACTIVE_COLOR)
+			exit_game_clicked = self.add_button("Exit", 400, 350, 100, 50, \
+				self.BUTTON_INACTIVE_COLOR, self.BUTTON_ACTIVE_COLOR)
+
+			if mode1_clicked == True:
+				return "Continue"
+			
+			if exit_game_clicked == True:
+				return "Exit"
+
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					quit()
+
+
+			pygame.display.update()
+
+
 	def get_diff_level(self):
 		"""
 		Show the diff levels and return the selected

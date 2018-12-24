@@ -36,7 +36,13 @@ class game_manager:
 					self.winner = "WHITE"
 				else:
 					self.winner = "TIE"
-				break
+				self.next_action = self.window.result_screen(self.winner)
+				pygame.time.wait(300)
+				if self.next_action == "Continue":
+					self.board.reset_game_board()
+					self.game_mode = self.window.intro_screen()
+				else:
+					break
 
 			if self.game_mode[self.current_playing] == "Human":
 				valid_moves = self.board.get_valid_moves(self.current_playing)
